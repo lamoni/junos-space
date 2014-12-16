@@ -1,6 +1,6 @@
 {
     "name": "lamoni/junos-space",
-    "description": "A PHP API for interacting with Juniper's Junos Space Network Management Platform",
+    "description": "A PHP API for interacting through REST API with Juniper's Junos Space Network Management Platform",
     "license": "MIT",
     "require": {
         "php": ">= 5.4.16",
