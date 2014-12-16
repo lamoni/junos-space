@@ -1,0 +1,24 @@
+{
+    "name": "lamoni/junos-space",
+    "description": "A PHP API for interacting with Juniper's Junos Space Network Management Platform",
+    "license": "MIT",
+    "require": {
+        "php": ">= 5.4.16",
+        "lamoni/restlyte": "v1.0.0"
+    },
+    "authors": [
+        { 
+            "name": "Lamoni Finlayson",
+            "email": "lamonif@gmail.com"
+        }
+    ],
+    "homepage": "https://github.com/lamoni/junos-space",
+    "keywords": [
+        "php",
+        "junos",
+        "space",
+        "network",
+        "management",
+        "platform"
+    ]
+}
