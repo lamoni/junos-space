@@ -5,7 +5,7 @@ use Lamoni\RESTLyte\RESTLyte;
 class JunosSpace
 {
     protected $server;
-    
+
     protected $username;
 
     protected $restlyte;
