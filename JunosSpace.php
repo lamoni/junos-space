@@ -111,6 +111,16 @@ class JunosSpace
         );
 
     }
+
+    public function patch($path, $postData, $accepts='')
+    {
+        return $this->getRestlyte()->patch(
+            $path,
+            $postData,
+            $accepts
+        );
+
+    }
     public function delete($path, $postData, $accepts='')
     {
         return $this->getRestlyte()->delete(
@@ -120,11 +130,6 @@ class JunosSpace
         );
 
     }
-
-
-
-
-
 
     public function getDevices()
     {
@@ -180,5 +185,12 @@ class JunosSpace
         );
     }
 
+
+    public function GET_Application_Management()
+    {
+
+        return $this->get("/api/space/application-management");
+
+    }
 
 }

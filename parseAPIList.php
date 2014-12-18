@@ -1,4 +1,8 @@
-GET /api/space/application-management
+<?php require_once(__DIR__ . "/vendor/autoload.php");
+
+use \Lamoni\JunosSpace\JunosSpace;
+
+$apis = 'GET /api/space/application-management
 	Accept:
 		application/vnd.net.juniper.space.application-management+xml;version=2;q=0.02
 		application/vnd.net.juniper.space.application-management+json;version=2;q=0.02
@@ -1661,5 +1665,43 @@ POST /api/space/user-management/roles
 
 PATCH /api/space/user-management/roles
 	Content-Type:
-		application/vnd.net.juniper.space.user-management.roles_patch+xml;version=3;charset=UTF-8
+		application/vnd.net.juniper.space.user-management.roles_patch+xml;version=3;charset=UTF-8';
 
+
+$apis = explode("\n\n", str_replace("\t", "", $apis));
+
+$apiConv = [];
+foreach ($apis as $api) {
+    $apiSplit = explode("\n", $api, 2);
+
+    list($operation, $path) = explode(" ", $apiSplit[0]);
+
+    if (isset($apiSplit[1])) {
+        $theRest = $apiSplit[1];
+
+        if (strpos($theRest, "Content-Type:") !== false) {
+            list($accept, $contentType) = explode("Content-Type:\n", $theRest);
+            $accept = str_replace("Accept:\n", "", trim($accept));
+            $accept = explode("\n", trim($accept));
+
+            $contentType = explode("\n", trim($contentType));
+
+            $apiConv[$operation][$path]['Accept'][] = $accept;
+            $apiConv[$operation][$path]['Content-Type'][] = $contentType;
+        }
+        else {
+
+            $accept = str_replace("Accept:\n", "", $theRest);
+            $accept = explode("\n", $accept);
+            $apiConv[$operation][$path]['Accept'][] = $accept;
+            $apiConv[$operation][$path]['Content-Type'][] = [];
+        }
+
+    }
+    else {
+        $apiConv[$operation][$path]['Accept'][] = [];
+        $apiConv[$operation][$path]['Content-Type'][] = [];
+    }
+}
+
+print_r($apiConv);
