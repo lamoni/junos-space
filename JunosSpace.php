@@ -10,6 +10,8 @@ class JunosSpace
 
     protected $restlyte;
 
+    protected $apiReference = null;
+
     public function __construct($server, $username, $password, $responseType='XML')
     {
 
@@ -183,14 +185,6 @@ class JunosSpace
         return $this->get(
             "/api/space/device-management/devices/{$deviceID}"
         );
-    }
-
-
-    public function GET_Application_Management()
-    {
-
-        return $this->get("/api/space/application-management");
-
     }
 
 }
