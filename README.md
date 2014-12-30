@@ -8,7 +8,6 @@ Examples
 
 - Get All Managed Devices
 ```php
-
 $space = new JunosSpace("192.168.0.100", "username", "password123!");
 
 print_r($space->getDevices());
