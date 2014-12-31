@@ -87,57 +87,73 @@ class JunosSpace
 
     public function get($path, $accepts='')
     {
-        return $this->getRestlyte()->get(
-            $path,
-            $accepts
-        );
+        return $this->request('get', $path, $accepts);
 
     }
 
     public function post($path, $postData, $accepts='')
     {
-        return $this->getRestlyte()->post(
-            $path,
-            $postData,
-            $accepts
-        );
-
+        return $this->request('post', $path, $accepts, $postData);
     }
 
     public function put($path, $postData, $accepts='')
     {
-        return $this->getRestlyte()->put(
-            $path,
-            $postData,
-            $accepts
-        );
+        return $this->request('put', $path, $accepts, $postData);
 
     }
 
     public function patch($path, $postData, $accepts='')
     {
-        return $this->getRestlyte()->patch(
-            $path,
-            $postData,
-            $accepts
-        );
+        return $this->request('patch', $path, $accepts, $postData);
 
     }
     public function delete($path, $postData, $accepts='')
     {
-        return $this->getRestlyte()->delete(
-            $path,
-            $postData,
-            $accepts
-        );
+
+        return $this->request('delete', $path, $accepts, $postData);
+
+    }
+
+    public function request($verb, $path, $accepts='',  $postData='')
+    {
+
+        try {
+
+            if ($postData !== '') {
+
+                $response = $this->getRestlyte()->$verb(
+                    $path,
+                    $postData,
+                    $accepts
+                );
+
+            }
+            else {
+
+                $response = $this->getRestlyte()->$verb(
+                    $path,
+                    $accepts
+                );
+
+            }
+        }
+        catch (\Exception $e) {
+
+            $this->whatIsResponseError($e);
+
+        }
+
+        return $response;
 
     }
 
     public function getDevices()
     {
+
         return $this->get(
             '/api/space/device-management/devices'
         );
+
     }
 
     /**
@@ -149,6 +165,7 @@ class JunosSpace
      */
     public function getDevicesByProperty($propertyName, $propertyValue, $caseSensitive=true)
     {
+
         if ($caseSensitive) {
             $caseSensitive = "";
         }
@@ -171,6 +188,7 @@ class JunosSpace
         }
 
         return $matchedDevices;
+
     }
 
     public function getDevicesByNameRegex($nameRegex)
@@ -182,9 +200,18 @@ class JunosSpace
 
     public function getDeviceByID($deviceID)
     {
+
         return $this->get(
             "/api/space/device-management/devices/{$deviceID}"
         );
+
+    }
+
+    public function whatIsResponseError(\Exception $e)
+    {
+        if (strpos($e->getMessage(), 'User not authenticated') !== false) {
+            throw new \Exception('Authentication to Junos Space failed', 1);
+        }
     }
 
 }
