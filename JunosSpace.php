@@ -141,6 +141,7 @@ class JunosSpace
 
             $this->whatIsResponseError($e);
 
+
         }
 
         return $response;
@@ -209,9 +210,19 @@ class JunosSpace
 
     public function whatIsResponseError(\Exception $e)
     {
-        if (strpos($e->getMessage(), 'User not authenticated') !== false) {
-            throw new \Exception('Authentication to Junos Space failed', 1);
+        $errors = [
+            'User not authenticated' => 'Authentication to Junos Space failed: invalid credentials',
+            'User password expired'  => 'Authentication to Junos Space failed: expired credentials'
+        ];
+
+        foreach ($errors as $errorFind=>$errorMessage) {
+            if (strpos($e->getMessage(), $errorFind) !== false) {
+                throw new \Exception($errorMessage, 1);
+            }
         }
+
+        throw $e;
+
     }
 
 }
