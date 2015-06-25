@@ -25,6 +25,17 @@ class JunosSpace
 
     }
 
+    public function getHTTPHeaders()
+    {
+        return $this->restlyte->getHTTPHeaders();
+    }
+
+    public function setHTTPHeaders($headers)
+    {
+        $this->restlyte->setHTTPHeaders($headers);
+    }
+
+
     /**
      * @return mixed
      */
