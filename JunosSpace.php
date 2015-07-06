@@ -35,7 +35,6 @@ class JunosSpace
         $this->restlyte->setHTTPHeaders($headers);
     }
 
-
     /**
      * @return mixed
      */
@@ -98,31 +97,54 @@ class JunosSpace
 
     public function get($path, $accepts='')
     {
-        return $this->request('get', $path, $accepts);
+        try {
+            return $this->request('get', $path, $accepts);
+        }
+        catch( \Exception $e ) {
+            throw new \Exception($e->getMessage());
+        }
 
     }
 
     public function post($path, $postData, $accepts='')
     {
-        return $this->request('post', $path, $accepts, $postData);
+        try {
+            return $this->request('post', $path, $accepts, $postData);
+        }
+        catch( \Exception $e ) {
+            throw new \Exception($e->getMessage());
+        }
     }
 
     public function put($path, $postData, $accepts='')
     {
-        return $this->request('put', $path, $accepts, $postData);
+        try {
+            return $this->request('put', $path, $accepts, $postData);
+        }
+        catch( \Exception $e ) {
+            throw new \Exception($e->getMessage());
+        }
 
     }
 
     public function patch($path, $postData, $accepts='')
     {
-        return $this->request('patch', $path, $accepts, $postData);
-
+        try {
+            return $this->request('patch', $path, $accepts, $postData);
+        }
+        catch( \Exception $e ) {
+            throw new \Exception($e->getMessage());
+        }
     }
+
     public function delete($path, $postData, $accepts='')
     {
-
-        return $this->request('delete', $path, $accepts, $postData);
-
+        try {
+            return $this->request('delete', $path, $accepts, $postData);
+        }
+        catch( \Exception $e ) {
+            throw new \Exception($e->getMessage());
+        }
     }
 
     public function request($verb, $path, $accepts='',  $postData='')
@@ -149,10 +171,7 @@ class JunosSpace
             }
         }
         catch (\Exception $e) {
-
-            $this->whatIsResponseError($e);
-
-
+            throw new \Exception($e->getMessage());
         }
 
         return $response;
